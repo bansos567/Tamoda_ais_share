@@ -11,19 +11,21 @@ jobs:
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4 # <-- Sudah di-update ke v4
+      uses: actions/checkout@v4
 
     - name: Setup Java JDK 8
-      uses: actions/setup-java@v4 # <-- Sudah di-update ke v4
+      uses: actions/setup-java@v4
       with:
         java-version: '8'
         distribution: 'temurin'
 
-    - name: Build Extension pakai Apache Ant
-      run: ant extension
+    - name: Build Extension (Apache Ant)
+      # Di template resmi, targetnya adalah 'extensions' (pakai 's')
+      run: ant extensions
 
     - name: Ambil File AIX (Upload Artifact)
-      uses: actions/upload-artifact@v4 # <-- INI BIANG KEROKNYA, Sudah di-update ke v4
+      uses: actions/upload-artifact@v4
       with:
         name: TamodaLauncher-Extension
-        path: out/*.aix
+        # Ini adalah jalur rahasia tempat file .aix disimpan oleh template MIT
+        path: appinventor/components/build/extensions/*.aix
