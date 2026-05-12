@@ -1,0 +1,31 @@
+name: Build Tamoda Extension
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # Memungkinkan Bos menjalankan build secara manual dari tombol Github
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Java JDK 8
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+
+    - name: Build Extension pakai Apache Ant
+      run: ant extension
+
+    - name: Ambil File AIX (Upload Artifact)
+      uses: actions/upload-artifact@v3
+      with:
+        name: TamodaLauncher-Extension
+        # Biasanya hasil compile Ant ada di folder 'out' atau 'build'. 
+        # Sesuaikan dengan template bawaan Bos.
+        path: out/*.aix
